@@ -1,6 +1,6 @@
 <template>
   <header>
-    <h1 class="text-xl">{{ props.title }}</h1>
+    <h1 class="text-3xl text-dark-gray mb-5">{{ props.title }}</h1>
   </header>
 </template>
 

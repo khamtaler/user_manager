@@ -8,9 +8,9 @@
       >Action</span
     >
     <SingleUserListItem
-      v-for="user in users.data"
+      v-for="user in users"
       :user="user"
-      class="col-start-1 col-end-[17] color-even"
+      class="col-start-1 col-end-[17] color-odd"
     />
   </div>
 </template>
@@ -18,6 +18,7 @@
 <script setup>
 import SingleUserListItem from './SingleUserListItem.vue'
 const props = defineProps({
-  users: Object
+  users: Array
 })
+console.log(props.users)
 </script>

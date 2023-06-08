@@ -6,13 +6,31 @@
         class="flex flex-col md:flex-row gap-4 items-center justify-between pb-7 border-b-light-gray border-b-[1px] border-opacity-10 mb-5"
       >
         <BaseSearchBar />
-        <button type="text" class="bg-green text-white rounded-full py-2 px-4">
+        <button type="text" class="bg-green text-white rounded-full py-2 px-5">
           <font-awesome-icon icon="fa-solid fa-plus " class="pr-1 font-bold" /> Add User
         </button>
       </div>
       <div>
         <ListOfUsers :users="users" />
       </div>
+    </div>
+    <div class="paged-list--navigation">
+      <button type="button" @click="backPage" class="paged-list--button">
+        <font-awesome-icon icon="fa-solid fa-angle-left" />
+      </button>
+      <button
+        type="button"
+        v-for="(item, index) in Math.ceil(usersData.length / itemsOnPage)"
+        :key="item"
+        @click="() => goToPage(item)"
+        :class="{ active: index === 0 }"
+        class="paged-list--button"
+      >
+        {{ item }}
+      </button>
+      <button type="button" @click="nextPage" class="paged-list--button">
+        <font-awesome-icon icon="fa-solid fa-angle-right" />
+      </button>
     </div>
   </div>
 </template>
@@ -24,15 +42,67 @@ import { onMounted, ref } from 'vue'
 import axios from 'axios'
 import ListOfUsers from '../components/ListOfUsers.vue'
 
+const usersData = ref([])
+
+const itemsOnPage = 4
+let currentPage = ref(1)
 const users = ref([])
+console.log(users.value)
+const nextPage = () => {
+  const pages = document.querySelectorAll('.paged-list--button')
+  if (currentPage.value !== Math.ceil(usersData.value.length / itemsOnPage)) {
+    pages[currentPage.value].classList.remove('active')
+    pages[currentPage.value + 1].classList.add('active')
+    currentPage.value += 1
+    users.value = usersData.value.slice(
+      (currentPage.value - 1) * itemsOnPage,
+      currentPage.value * itemsOnPage
+    )
+  }
+}
+
+const backPage = () => {
+  const pages = document.querySelectorAll('.paged-list--button')
+  if (currentPage.value !== 1) {
+    pages[currentPage.value].classList.remove('active')
+    pages[currentPage.value - 1].classList.add('active')
+    currentPage.value -= 1
+    users.value = usersData.value.slice(
+      (currentPage.value - 1) * itemsOnPage,
+      currentPage.value * itemsOnPage
+    )
+  }
+}
+
+const goToPage = (numPage) => {
+  const pages = document.querySelectorAll('.paged-list--button')
+  pages.forEach((element) => {
+    element.classList.remove('active')
+  })
+
+  pages[numPage].classList.add('active')
+  currentPage.value = numPage
+  users.value = usersData.value.slice(
+    (currentPage.value - 1) * itemsOnPage,
+    currentPage.value * itemsOnPage
+  )
+}
 
 onMounted(async () => {
   try {
     const data = axios.get('https://reqres.in/api/users?page=2').then((res) => {
-      console.log(res.data)
-      return res.data
+      return res.data.data
     })
-    users.value = await data
+
+    usersData.value = await data
+    users.value = JSON.parse(
+      JSON.stringify(
+        usersData.value.slice(
+          (currentPage.value - 1) * itemsOnPage,
+          currentPage.value * itemsOnPage
+        )
+      )
+    )
   } catch (err) {
     console.error(err)
   }

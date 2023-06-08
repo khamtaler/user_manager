@@ -14,13 +14,28 @@
       <router-link :to="{ name: 'edit-user-details', params: { id: user.id } }"
         ><font-awesome-icon icon="fa-solid fa-pen-to-square" class="text-lighter-gray"
       /></router-link>
-      <font-awesome-icon icon="fa-solid fa-trash" class="text-lighter-gray cursor-pointer" />
+      <font-awesome-icon
+        icon="fa-solid fa-trash"
+        class="text-lighter-gray cursor-pointer"
+        @click="deleteUser(user.id)"
+      />
     </div>
   </div>
 </template>
 
 <script setup>
+import axios from 'axios'
 const props = defineProps({
   user: Object
 })
+
+function deleteUser(id) {
+  try {
+    axios.delete(`https://reqres.in/api/users/${id}`).then((res) => {
+      console.log(res)
+    })
+  } catch (err) {
+    console.log(err)
+  }
+}
 </script>

@@ -1,5 +1,9 @@
 <template>
-  <div></div>
+  <div>
+    <PageHeader title="User list" />
+  </div>
 </template>
 
-<style lang="scss" scoped></style>
+<script setup>
+import PageHeader from '../components/PageHeader.vue'
+</script>

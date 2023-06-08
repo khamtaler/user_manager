@@ -2,7 +2,7 @@
   <div class="relative max-w-[450px] w-full">
     <input
       type="search"
-      class="w-full px-2 py-1 text-light-gray bg-[#F7F8F9] placeholder:text-light-gray"
+      class="w-full px-2 py-1 bg-[#F7F8F9] placeholder:text-light-gray text-dark-gray"
       placeholder="Search for users..."
     />
     <font-awesome-icon

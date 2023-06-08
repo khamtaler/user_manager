@@ -14,7 +14,7 @@
       <router-link :to="{ name: 'edit-user-details', params: { id: user.id } }"
         ><font-awesome-icon icon="fa-solid fa-pen-to-square" class="text-lighter-gray"
       /></router-link>
-      <font-awesome-icon icon="fa-solid fa-trash" class="text-lighter-gray" />
+      <font-awesome-icon icon="fa-solid fa-trash" class="text-lighter-gray cursor-pointer" />
     </div>
   </div>
 </template>

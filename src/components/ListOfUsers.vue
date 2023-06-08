@@ -20,5 +20,4 @@ import SingleUserListItem from './SingleUserListItem.vue'
 const props = defineProps({
   users: Array
 })
-console.log(props.users)
 </script>

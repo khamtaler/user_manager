@@ -6,17 +6,24 @@
         class="flex flex-col md:flex-row gap-4 items-center justify-between pb-7 border-b-light-gray border-b-[1px] border-opacity-10 mb-5"
       >
         <BaseSearchBar />
-        <button type="text" class="bg-green text-white rounded-full py-2 px-5">
-          <font-awesome-icon icon="fa-solid fa-plus " class="pr-1 font-bold" /> Add User
-        </button>
+        <router-link
+          :to="{ name: 'create-user' }"
+          class="bg-green text-white rounded-full py-2 px-5"
+          ><font-awesome-icon icon="fa-solid fa-plus " class="pr-1 font-bold" /> Add User
+        </router-link>
       </div>
       <div>
         <ListOfUsers :users="users" />
       </div>
     </div>
-    <div class="paged-list--navigation">
-      <button type="button" @click="backPage" class="paged-list--button">
-        <font-awesome-icon icon="fa-solid fa-angle-left" />
+    <div class="mt-5 flex flex-wrap items-center">
+      <button
+        type="button"
+        @click="backPage"
+        class="paged-list--button bg-white p-2 text-xs border-[1px] border-lighter-gray"
+      >
+        <font-awesome-icon icon="fa-solid fa-chevron-left" />
+        <font-awesome-icon icon="fa-solid fa-chevron-left" />
       </button>
       <button
         type="button"
@@ -24,12 +31,17 @@
         :key="item"
         @click="() => goToPage(item)"
         :class="{ active: index === 0 }"
-        class="paged-list--button"
+        class="paged-list--button bg-white py-2 px-3 border-[1px] border-l-0 border-lighter-gray text-xs"
       >
         {{ item }}
       </button>
-      <button type="button" @click="nextPage" class="paged-list--button">
-        <font-awesome-icon icon="fa-solid fa-angle-right" />
+      <button
+        type="button"
+        @click="nextPage"
+        class="paged-list--button bg-white p-2 text-xs border-[1px] border-l-0 border-lighter-gray"
+      >
+        <font-awesome-icon icon="fa-solid fa-chevron-right" />
+        <font-awesome-icon icon="fa-solid fa-chevron-right" />
       </button>
     </div>
   </div>
@@ -38,16 +50,16 @@
 <script setup>
 import BaseSearchBar from '../components/BaseSearchBar.vue'
 import PageHeader from '../components/PageHeader.vue'
+import ListOfUsers from '../components/ListOfUsers.vue'
 import { onMounted, ref } from 'vue'
 import axios from 'axios'
-import ListOfUsers from '../components/ListOfUsers.vue'
 
 const usersData = ref([])
 
-const itemsOnPage = 4
+const itemsOnPage = 8
 let currentPage = ref(1)
 const users = ref([])
-console.log(users.value)
+
 const nextPage = () => {
   const pages = document.querySelectorAll('.paged-list--button')
   if (currentPage.value !== Math.ceil(usersData.value.length / itemsOnPage)) {

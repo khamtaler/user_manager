@@ -28,3 +28,11 @@ input[type='search']::-webkit-search-results-decoration {
   background-color: #f5f7f9;
   border-radius: 7px;
 }
+
+.paged-list--button:not(.active) {
+  color: #459672;
+}
+.paged-list--button.active {
+  background-color: #459672;
+  color: #fff;
+}

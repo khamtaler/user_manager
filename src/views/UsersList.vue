@@ -58,7 +58,6 @@ import axios from 'axios'
 const usersData = ref([])
 
 function getPage(page) {
-  console.log(usersData.value.total_pages)
   if (page <= 0) {
     return
   }
@@ -67,7 +66,6 @@ function getPage(page) {
   }
   try {
     axios.get(`https://reqres.in/api/users?page=${page}&per_page=8`).then((res) => {
-      console.log(res.data)
       usersData.value = res.data
     })
   } catch (err) {
@@ -78,7 +76,6 @@ function getPage(page) {
 onMounted(() => {
   try {
     axios.get('https://reqres.in/api/users?per_page=8').then((res) => {
-      console.log(res.data)
       usersData.value = res.data
     })
   } catch (err) {

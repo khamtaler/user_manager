@@ -36,9 +36,15 @@
       <div class="flex flex-col bg-white p-4 md:flex-[2]">
         <figure class="my-[50px]">
           <img
-            src="/avatar.jpg"
-            alt="avatar placeholder"
-            class="mx-auto block aspect-square max-w-[35%] rounded-full border-2 border-light-gray object-cover p-[1px]"
+            :src="form.avatar ? form.avatar : '/avatar.jpg'"
+            :alt="
+              /^https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_\+.~#?&\/=]*)$/.test(
+                form.avatar
+              )
+                ? 'avatar placeholder'
+                : 'invalid url'
+            "
+            class="mx-auto block aspect-square min-w-[50%] max-w-[35%] rounded-full border-2 border-light-gray object-cover p-[1px] text-center leading-[150px]"
           />
         </figure>
         <button
@@ -80,9 +86,6 @@ const form = ref({
   last_name: '',
   avatar: ''
 })
-const regex = new RegExp(
-  '/^https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_\+.~#?&\/=]*)$/'
-)
 
 const changeAvatar = ref(false)
 async function RegisterUser() {
@@ -117,7 +120,7 @@ async function RegisterUser() {
         router.push({ name: 'home' })
       })
     } catch (err) {
-      console.log(err)
+      console.error(err)
     }
   }
 }

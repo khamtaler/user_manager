@@ -98,6 +98,19 @@ async function UpdateUser() {
   if (!form.value.first_name && form.value.last_name) {
     alert(`fields first name is required`)
     return
+  }
+  if (
+    (/^https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_\+.~#?&\/=]*)$/.test(
+      form.value.avatar
+    ) &&
+      form.value.avatar.length === 0) ||
+    (!/^https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_\+.~#?&\/=]*)$/.test(
+      form.value.avatar
+    ) &&
+      form.value.avatar.length !== 0)
+  ) {
+    alert(`Check your avatar URL please`)
+    return
   } else {
     try {
       await axios.put(`https://reqres.in/api/users/${route.params.id}`, form.value).then((res) => {

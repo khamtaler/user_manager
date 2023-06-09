@@ -12,10 +12,11 @@
           ><font-awesome-icon icon="fa-solid fa-plus " class="pr-1 font-bold" /> Add User
         </router-link>
       </div>
-      <div>
+      <div v-if="users">
         <ListOfUsers :users="users" />
       </div>
     </div>
+    <!-- w zależności od ilości użytkowników należałoby renderować odpowiednie przeciski, w przypadku jednostronicowej listy należałoby ukryć je wszystkie, aktualnie są zostawione z uwagi na obecność paginacji w projekcie -->
     <div class="mt-5 flex flex-wrap items-center">
       <button
         type="button"
@@ -57,7 +58,7 @@ import axios from 'axios'
 const usersData = ref([])
 
 const itemsOnPage = 8
-let currentPage = ref(1)
+const currentPage = ref(1)
 const users = ref([])
 
 const nextPage = () => {

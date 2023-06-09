@@ -80,6 +80,9 @@ const form = ref({
   last_name: '',
   avatar: ''
 })
+const regex = new RegExp(
+  '/^https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_\+.~#?&\/=]*)$/'
+)
 
 const changeAvatar = ref(false)
 async function RegisterUser() {
@@ -94,7 +97,21 @@ async function RegisterUser() {
   if (!form.value.first_name && form.value.last_name) {
     alert(`fields first name is required`)
     return
+  }
+  if (
+    (/^https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_\+.~#?&\/=]*)$/.test(
+      form.value.avatar
+    ) &&
+      form.value.avatar.length === 0) ||
+    (!/^https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_\+.~#?&\/=]*)$/.test(
+      form.value.avatar
+    ) &&
+      form.value.avatar.length !== 0)
+  ) {
+    alert(`Check your avatar URL please`)
+    return
   } else {
+    console.log(form.value)
     try {
       await axios.post('https://reqres.in/api/users', form.value).then((res) => {
         alert(`The user has been registered with code ${res.status}`)

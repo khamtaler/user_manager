@@ -36,3 +36,7 @@ input[type='search']::-webkit-search-results-decoration {
   background-color: #459672;
   color: #fff;
 }
+
+.aspect-sqaure {
+  aspect-ratio: 1 / 1;
+}

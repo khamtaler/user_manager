@@ -5,7 +5,7 @@
       <div
         class="mb-5 flex flex-col items-center justify-between gap-4 border-b-[1px] border-b-light-gray border-opacity-10 pb-7 md:flex-row"
       >
-        <BaseSearchBar />
+        <BaseSearchBar @search="search" />
         <router-link
           :to="{ name: 'create-user' }"
           class="rounded-full bg-green px-5 py-2 text-white"
@@ -103,10 +103,9 @@ const goToPage = (numPage) => {
 
 onMounted(async () => {
   try {
-    const data = axios.get('https://reqres.in/api/users?page=2').then((res) => {
+    const data = axios.get('https://reqres.in/api/users?per_page=12').then((res) => {
       return res.data.data
     })
-
     usersData.value = await data
     users.value = JSON.parse(
       JSON.stringify(

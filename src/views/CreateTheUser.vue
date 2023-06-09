@@ -36,9 +36,9 @@
       <div class="flex flex-col bg-white p-4 md:flex-[2]">
         <figure class="my-[50px]">
           <img
-            src="../../avatar.jpg"
+            src="/avatar.jpg"
             alt="avatar placeholder"
-            class="mx-auto block max-w-[35%] rounded-full border-2 border-light-gray object-cover p-[1px]"
+            class="mx-auto block aspect-square max-w-[35%] rounded-full border-2 border-light-gray object-cover p-[1px]"
           />
         </figure>
         <button
@@ -111,7 +111,6 @@ async function RegisterUser() {
     alert(`Check your avatar URL please`)
     return
   } else {
-    console.log(form.value)
     try {
       await axios.post('https://reqres.in/api/users', form.value).then((res) => {
         alert(`The user has been registered with code ${res.status}`)

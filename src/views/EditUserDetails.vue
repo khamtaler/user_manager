@@ -38,9 +38,9 @@
       <div class="flex flex-col bg-white p-4 md:flex-[2]">
         <figure class="my-[50px]">
           <img
-            :src="form.avatar ? form.avatar : '../../avatar.jpg'"
+            :src="form.avatar ? form.avatar : '/avatar.jpg'"
             alt="avatar placeholder"
-            class="mx-auto block min-w-[50%] max-w-[35%] rounded-full border-2 border-light-gray object-cover p-[1px]"
+            class="mx-auto block aspect-square min-w-[50%] max-w-[35%] rounded-full border-2 border-light-gray object-cover p-[1px]"
           />
         </figure>
         <button

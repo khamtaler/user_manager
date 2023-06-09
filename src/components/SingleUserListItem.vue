@@ -30,13 +30,12 @@ const props = defineProps({
   user: Object
 })
 
-function deleteUser(id) {
+async function deleteUser(id) {
   try {
-    axios.delete(`https://reqres.in/api/users/${id}`).then((res) => {
-      alert(`user with id ${id} has been deleted with code ${res.status}`)
-    })
+    const response = await axios.delete(`https://reqres.in/api/users/${id}`)
+    alert(`User with id ${id} has been deleted with code ${response.status}`)
   } catch (err) {
-    console.log(err)
+    console.error(err)
   }
 }
 </script>

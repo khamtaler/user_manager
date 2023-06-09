@@ -5,22 +5,22 @@
       <div
         class="mb-5 flex flex-col items-center justify-between gap-4 border-b-[1px] border-b-light-gray border-opacity-10 pb-7 md:flex-row"
       >
-        <BaseSearchBar @search="search" />
+        <BaseSearchBar />
         <router-link
           :to="{ name: 'create-user' }"
           class="rounded-full bg-green px-5 py-2 text-white"
           ><font-awesome-icon icon="fa-solid fa-plus " class="pr-1 font-bold" /> Add User
         </router-link>
       </div>
-      <div v-if="users">
-        <ListOfUsers :users="users" />
+      <div v-if="usersData">
+        <ListOfUsers :users="usersData.data" />
       </div>
     </div>
-    <!-- w zależności od ilości użytkowników należałoby renderować odpowiednie przeciski, w przypadku jednostronicowej listy należałoby ukryć je wszystkie, aktualnie są zostawione z uwagi na obecność paginacji w projekcie -->
+    <!-- w zależności od ilości użytkowników należałoby ukrywać strzałki, gdy nie można nimi przejść na kolejną kartę, na potrzebę zobaczenia przycisków zostawiłem je widoczne z zablokowanym przejściem -->
     <div class="mt-5 flex flex-wrap items-center">
       <button
         type="button"
-        @click="backPage"
+        @click="getPage(usersData.page - 1)"
         class="paged-list--button border-[1px] border-lighter-gray bg-white p-2 text-xs"
       >
         <font-awesome-icon icon="fa-solid fa-chevron-left" />
@@ -28,17 +28,17 @@
       </button>
       <button
         type="button"
-        v-for="(item, index) in Math.ceil(usersData.length / itemsOnPage)"
+        v-for="(item, index) in usersData.total_pages"
         :key="item"
-        @click="() => goToPage(item)"
-        :class="{ active: index === 0 }"
+        @click="getPage(index + 1)"
+        :class="{ active: index + 1 === usersData.page }"
         class="paged-list--button border-[1px] border-l-0 border-lighter-gray bg-white px-3 py-2 text-xs"
       >
-        {{ item }}
+        {{ index + 1 }}
       </button>
       <button
         type="button"
-        @click="nextPage"
+        @click="getPage(usersData.page + 1)"
         class="paged-list--button border-[1px] border-l-0 border-lighter-gray bg-white p-2 text-xs"
       >
         <font-awesome-icon icon="fa-solid fa-chevron-right" />
@@ -57,64 +57,30 @@ import axios from 'axios'
 
 const usersData = ref([])
 
-const itemsOnPage = 8
-const currentPage = ref(1)
-const users = ref([])
-
-const nextPage = () => {
-  const pages = document.querySelectorAll('.paged-list--button')
-  if (currentPage.value !== Math.ceil(usersData.value.length / itemsOnPage)) {
-    pages[currentPage.value].classList.remove('active')
-    pages[currentPage.value + 1].classList.add('active')
-    currentPage.value += 1
-    users.value = usersData.value.slice(
-      (currentPage.value - 1) * itemsOnPage,
-      currentPage.value * itemsOnPage
-    )
+function getPage(page) {
+  console.log(usersData.value.total_pages)
+  if (page <= 0) {
+    return
   }
-}
-
-const backPage = () => {
-  const pages = document.querySelectorAll('.paged-list--button')
-  if (currentPage.value !== 1) {
-    pages[currentPage.value].classList.remove('active')
-    pages[currentPage.value - 1].classList.add('active')
-    currentPage.value -= 1
-    users.value = usersData.value.slice(
-      (currentPage.value - 1) * itemsOnPage,
-      currentPage.value * itemsOnPage
-    )
+  if (page > usersData.value.total_pages) {
+    return
   }
-}
-
-const goToPage = (numPage) => {
-  const pages = document.querySelectorAll('.paged-list--button')
-  pages.forEach((element) => {
-    element.classList.remove('active')
-  })
-
-  pages[numPage].classList.add('active')
-  currentPage.value = numPage
-  users.value = usersData.value.slice(
-    (currentPage.value - 1) * itemsOnPage,
-    currentPage.value * itemsOnPage
-  )
-}
-
-onMounted(async () => {
   try {
-    const data = axios.get('https://reqres.in/api/users?per_page=12').then((res) => {
-      return res.data.data
+    axios.get(`https://reqres.in/api/users?page=${page}&per_page=8`).then((res) => {
+      console.log(res.data)
+      usersData.value = res.data
     })
-    usersData.value = await data
-    users.value = JSON.parse(
-      JSON.stringify(
-        usersData.value.slice(
-          (currentPage.value - 1) * itemsOnPage,
-          currentPage.value * itemsOnPage
-        )
-      )
-    )
+  } catch (err) {
+    console.error(err)
+  }
+}
+
+onMounted(() => {
+  try {
+    axios.get('https://reqres.in/api/users?per_page=8').then((res) => {
+      console.log(res.data)
+      usersData.value = res.data
+    })
   } catch (err) {
     console.error(err)
   }

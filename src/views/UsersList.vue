@@ -1,14 +1,14 @@
 <template>
-  <div class="max-w-[1200px] w-full mx-auto px-5">
+  <div class="mx-auto w-full max-w-[1200px] px-5">
     <PageHeader title="User list" />
-    <div class="bg-white px-4 py-7 border-[1px] border-opacity-10 rounded-md">
+    <div class="rounded-md border-[1px] border-opacity-10 bg-white px-4 py-7">
       <div
-        class="flex flex-col md:flex-row gap-4 items-center justify-between pb-7 border-b-light-gray border-b-[1px] border-opacity-10 mb-5"
+        class="mb-5 flex flex-col items-center justify-between gap-4 border-b-[1px] border-b-light-gray border-opacity-10 pb-7 md:flex-row"
       >
         <BaseSearchBar />
         <router-link
           :to="{ name: 'create-user' }"
-          class="bg-green text-white rounded-full py-2 px-5"
+          class="rounded-full bg-green px-5 py-2 text-white"
           ><font-awesome-icon icon="fa-solid fa-plus " class="pr-1 font-bold" /> Add User
         </router-link>
       </div>
@@ -20,7 +20,7 @@
       <button
         type="button"
         @click="backPage"
-        class="paged-list--button bg-white p-2 text-xs border-[1px] border-lighter-gray"
+        class="paged-list--button border-[1px] border-lighter-gray bg-white p-2 text-xs"
       >
         <font-awesome-icon icon="fa-solid fa-chevron-left" />
         <font-awesome-icon icon="fa-solid fa-chevron-left" />
@@ -31,14 +31,14 @@
         :key="item"
         @click="() => goToPage(item)"
         :class="{ active: index === 0 }"
-        class="paged-list--button bg-white py-2 px-3 border-[1px] border-l-0 border-lighter-gray text-xs"
+        class="paged-list--button border-[1px] border-l-0 border-lighter-gray bg-white px-3 py-2 text-xs"
       >
         {{ item }}
       </button>
       <button
         type="button"
         @click="nextPage"
-        class="paged-list--button bg-white p-2 text-xs border-[1px] border-l-0 border-lighter-gray"
+        class="paged-list--button border-[1px] border-l-0 border-lighter-gray bg-white p-2 text-xs"
       >
         <font-awesome-icon icon="fa-solid fa-chevron-right" />
         <font-awesome-icon icon="fa-solid fa-chevron-right" />
@@ -115,6 +115,7 @@ onMounted(async () => {
         )
       )
     )
+    console.log(users.value)
   } catch (err) {
     console.error(err)
   }

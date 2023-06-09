@@ -1,8 +1,8 @@
 <template>
-  <div class="relative max-w-[450px] w-full">
+  <div class="relative w-full max-w-[450px]">
     <input
       type="search"
-      class="w-full px-2 py-1 bg-[#F7F8F9] placeholder:text-light-gray text-dark-gray"
+      class="w-full bg-[#F7F8F9] px-2 py-1 text-dark-gray placeholder:text-light-gray"
       placeholder="Search for users..."
     />
     <font-awesome-icon

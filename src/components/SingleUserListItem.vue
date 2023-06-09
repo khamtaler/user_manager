@@ -1,22 +1,22 @@
 <template>
   <div class="grid grid-cols-16 items-center py-3">
-    <figure class="col-start-1 col-end-3 sm:col-end-2 h-full pl-2">
-      <img :src="user.avatar" alt="avatar" class="rounded-full w-[50px] h-full object-cover" />
+    <figure class="col-start-1 col-end-3 h-full pl-2 sm:col-end-2">
+      <img :src="user.avatar" alt="avatar" class="h-full w-[50px] rounded-full object-cover" />
     </figure>
     <h6
-      class="text-dark-gray col-start-4 sm:col-start-3 col-end-[13] font-medium text-xs sm:text-sm md:text-base"
+      class="col-start-4 col-end-[13] text-xs font-medium text-dark-gray sm:col-start-3 sm:text-sm md:text-base"
     >
       {{ user.first_name }} {{ user.last_name }}
     </h6>
     <div
-      class="col-start-[13] col-end-[17] sm:col-end-[16] md:col-start-[15] md:col-end-[16] flex justify-around items-center flex-row"
+      class="col-start-[13] col-end-[17] flex flex-row items-center justify-around sm:col-end-[16] md:col-start-[15] md:col-end-[16]"
     >
       <router-link :to="{ name: 'edit-user-details', params: { id: user.id } }"
         ><font-awesome-icon icon="fa-solid fa-pen-to-square" class="text-lighter-gray"
       /></router-link>
       <font-awesome-icon
         icon="fa-solid fa-trash"
-        class="text-lighter-gray cursor-pointer"
+        class="cursor-pointer text-lighter-gray"
         @click="deleteUser(user.id)"
       />
     </div>
@@ -32,7 +32,7 @@ const props = defineProps({
 function deleteUser(id) {
   try {
     axios.delete(`https://reqres.in/api/users/${id}`).then((res) => {
-      console.log(res)
+      alert(`user with id ${id} has been deleted with code ${res.status}`)
     })
   } catch (err) {
     console.log(err)

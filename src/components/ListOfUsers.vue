@@ -1,16 +1,16 @@
 <template>
-  <div class="grid grid-cols-16 mx-auto auto-rows-[1fr] items-center">
-    <span class="font-bold text-dark-gray col-start-4 sm:col-start-3 col-end-[13] md:col-end-[15]"
+  <div class="mx-auto grid auto-rows-[1fr] grid-cols-16 items-center">
+    <span class="col-start-4 col-end-[13] font-bold text-dark-gray sm:col-start-3 md:col-end-[15]"
       >Full Name</span
     >
     <span
-      class="font-bold text-dark-gray col-start-[13] col-end-[17] sm:col-end-[16] md:col-start-[15] md:col-end-[16] mx-auto"
+      class="col-start-[13] col-end-[17] mx-auto font-bold text-dark-gray sm:col-end-[16] md:col-start-[15] md:col-end-[16]"
       >Action</span
     >
     <SingleUserListItem
       v-for="user in users"
       :user="user"
-      class="col-start-1 col-end-[17] color-odd"
+      class="color-odd col-start-1 col-end-[17]"
     />
   </div>
 </template>

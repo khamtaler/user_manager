@@ -1,5 +1,5 @@
 <template>
-  <div class="grid grid-cols-16 items-center py-3">
+  <div class="grid h-full grid-cols-16 items-center py-3">
     <figure class="col-start-1 col-end-3 h-full pl-2 sm:col-end-2">
       <img :src="user.avatar" alt="avatar" class="h-full w-[50px] rounded-full object-cover" />
     </figure>

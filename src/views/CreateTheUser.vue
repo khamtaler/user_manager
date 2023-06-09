@@ -1,6 +1,6 @@
 <template>
   <div class="mx-auto w-full max-w-[1200px] px-5">
-    <PageHeader title="Update User" />
+    <PageHeader title="Add User" />
     <div class="flex flex-col-reverse items-stretch justify-between gap-5 md:flex-row">
       <div class="flex w-full flex-col rounded-md bg-white p-4 md:flex-[5]">
         <div class="mt-[50px] flex flex-col justify-evenly gap-5 md:flex-row">
@@ -11,17 +11,15 @@
               type="text"
               v-model="form.first_name"
               required
-              :placeholder="form.first_name ? form.first_name : ''"
               class="rounded-sm border-[1px] border-lighter-gray border-opacity-20 px-4 py-1"
             />
           </div>
           <div class="flex w-full flex-1 flex-col">
-            <label for="LastName" class="mb-2 font-semibold"> Last Name</label>
+            <label for="LastName" class="mb-2 font-semibold"> Last Name </label>
             <input
               id="LastName"
               type="text"
               v-model="form.last_name"
-              :placeholder="form.last_name ? form.last_name : ''"
               required
               class="rounded-sm border-[1px] border-lighter-gray border-opacity-20 px-4 py-1"
             />
@@ -29,18 +27,18 @@
         </div>
         <button
           type="submit"
-          @click="UpdateUser"
+          @click="RegisterUser"
           class="mx-auto mt-[50px] self-start rounded-md bg-green px-4 py-2 text-white md:mx-0 md:mt-auto"
         >
-          Update User
+          Register User
         </button>
       </div>
       <div class="flex flex-col bg-white p-4 md:flex-[2]">
         <figure class="my-[50px]">
           <img
-            :src="form.avatar ? form.avatar : '../../avatar.jpg'"
+            src="../../avatar.jpg"
             alt="avatar placeholder"
-            class="mx-auto block min-w-[50%] max-w-[35%] rounded-full border-2 border-light-gray object-cover p-[1px]"
+            class="mx-auto block max-w-[35%] rounded-full border-2 border-light-gray object-cover p-[1px]"
           />
         </figure>
         <button
@@ -74,11 +72,9 @@
 <script setup>
 import axios from 'axios'
 import PageHeader from '../components/PageHeader.vue'
-import { ref, onMounted } from 'vue'
+import { ref } from 'vue'
 import router from '../router'
-import { useRoute } from 'vue-router'
 
-const route = useRoute()
 const form = ref({
   first_name: '',
   last_name: '',
@@ -86,7 +82,7 @@ const form = ref({
 })
 
 const changeAvatar = ref(false)
-async function UpdateUser() {
+async function RegisterUser() {
   if (!form.value.first_name && !form.value.last_name) {
     alert(`fields first name and last name are required`)
     return
@@ -100,8 +96,8 @@ async function UpdateUser() {
     return
   } else {
     try {
-      await axios.put(`https://reqres.in/api/users/${route.params.id}`, form.value).then((res) => {
-        alert(`The user has been updated with code ${res.status}`)
+      await axios.post('https://reqres.in/api/users', form.value).then((res) => {
+        alert(`The user has been registered with code ${res.status}`)
         router.push({ name: 'home' })
       })
     } catch (err) {
@@ -109,16 +105,4 @@ async function UpdateUser() {
     }
   }
 }
-
-onMounted(async () => {
-  try {
-    await axios.get(`https://reqres.in/api/users/${route.params.id}`).then((res) => {
-      form.value.first_name = res.data.data.first_name
-      form.value.last_name = res.data.data.last_name
-      form.value.avatar = res.data.data.avatar
-    })
-  } catch (err) {
-    console.log(err)
-  }
-})
 </script>

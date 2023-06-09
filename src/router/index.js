@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import UsersList from '../views/UsersList.vue'
-import CreateUser from '../views/CreateUser.vue'
+import CreateTheUser from '../views/CreateTheUser.vue'
 import EditUserDetails from '../views/EditUserDetails.vue'
 
 const router = createRouter({
@@ -14,7 +14,7 @@ const router = createRouter({
     {
       path: '/create-user',
       name: 'create-user',
-      component: CreateUser
+      component: CreateTheUser
     },
     {
       path: '/edit-user-details/:id?',

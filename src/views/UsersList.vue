@@ -115,7 +115,6 @@ onMounted(async () => {
         )
       )
     )
-    console.log(users.value)
   } catch (err) {
     console.error(err)
   }

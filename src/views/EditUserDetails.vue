@@ -107,7 +107,7 @@ async function UpdateUser() {
     return
   }
   if (!form.value.first_name && form.value.last_name) {
-    alert(`fields first name is required`)
+    alert(`field first name is required`)
     return
   }
   if (
